@@ -1,0 +1,462 @@
+/* ---------------------------------------------------------------------
+   Design tokens (scoped to this component)
+   bg:      near-black, faint warmth        #0a090b
+   surface: raised charcoal panels          #141216 / #1b171d
+   gold:    deep -> bright, for accents      #8a6a2f -> #f3d98a
+   wine:    secondary luxury accent (sell)   #4a1620
+   emerald: secondary luxury accent (buy)    #0e3b2e
+   ------------------------------------------------------------------- */
+
+.wrap {
+  --bg: #0a090b;
+  --surface: #141216;
+  --surface-2: #1b171d;
+  --line: rgba(212, 175, 55, 0.16);
+  --gold-deep: #8a6a2f;
+  --gold: #d4af37;
+  --gold-bright: #f3d98a;
+  --emerald: #1c5c46;
+  --wine: #7a2c3a;
+  --text: #f3efe7;
+  --text-muted: #9a938c;
+  --up: #5cb583;
+  --down: #d1583f;
+
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 2.5rem 1.5rem 3rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.wrap * {
+  box-sizing: border-box;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% -10%, rgba(212, 175, 55, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 110%, rgba(28, 92, 70, 0.14), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 5% 100%, rgba(122, 44, 58, 0.12), transparent 60%);
+}
+
+/* ---------------------------------- top bar --------------------------- */
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 960px;
+  margin: 0 auto 3rem;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.brandMark {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: linear-gradient(120deg, var(--gold-deep), var(--gold-bright), var(--gold-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brandWord {
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.liveBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--gold-bright);
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.06);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--up);
+  box-shadow: 0 0 0 0 rgba(92, 181, 131, 0.6);
+  animation: pulseDot 1.8s ease-out infinite;
+}
+
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(92, 181, 131, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(92, 181, 131, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(92, 181, 131, 0); }
+}
+
+.currencyToggle {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.currencyBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.currencyBtnActive {
+  color: #14110d;
+  background: linear-gradient(120deg, var(--gold-bright), var(--gold));
+}
+
+/* ------------------------------------ hero ----------------------------- */
+
+.hero {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.9rem;
+}
+
+.heroPrice {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 1;
+  margin: 0;
+  background: linear-gradient(
+    100deg,
+    var(--gold-deep) 20%,
+    var(--gold-bright) 45%,
+    var(--gold) 55%,
+    var(--gold-deep) 80%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.changeRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1.1rem;
+}
+
+.changeChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.changeUp {
+  color: var(--up);
+  background: rgba(92, 181, 131, 0.1);
+  border: 1px solid rgba(92, 181, 131, 0.3);
+}
+
+.changeDown {
+  color: var(--down);
+  background: rgba(209, 88, 63, 0.1);
+  border: 1px solid rgba(209, 88, 63, 0.3);
+}
+
+.changeArrow {
+  font-size: 0.7rem;
+}
+
+.updatedAt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.errorText {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--down);
+}
+
+/* refresh progress line — resets & refills each poll */
+.progressTrack {
+  max-width: 260px;
+  height: 2px;
+  margin: 1.8rem auto 0;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-bright));
+  animation: fill 20s linear forwards;
+}
+
+@keyframes fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* ------------------------------------ cards ---------------------------- */
+
+.cardGrid {
+  max-width: 960px;
+  margin: 3.2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 780px) {
+  .cardGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.card {
+  position: relative;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.25rem 1.1rem;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: cardIn 0.6s ease forwards;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  transform: translateY(-3px);
+}
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.cardKarat {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.cardPurity {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.cardPriceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.cardGram {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardUnit {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.cardBuySell {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 0.7rem;
+}
+
+.bsItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bsLabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.bsValue {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bsDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+  margin: 0 0.75rem;
+}
+
+.flashUp {
+  animation: cardIn 0.6s ease forwards, glowUp 1.1s ease;
+}
+
+.flashDown {
+  animation: cardIn 0.6s ease forwards, glowDown 1.1s ease;
+}
+
+@keyframes glowUp {
+  0% { box-shadow: 0 0 0 1px rgba(92, 181, 131, 0.55); }
+  100% { box-shadow: 0 0 0 1px rgba(92, 181, 131, 0); }
+}
+
+@keyframes glowDown {
+  0% { box-shadow: 0 0 0 1px rgba(209, 88, 63, 0.55); }
+  100% { box-shadow: 0 0 0 1px rgba(209, 88, 63, 0); }
+}
+
+/* ------------------------------------ tola panel ------------------------ */
+
+.tolaPanel {
+  max-width: 960px;
+  margin: 1.5rem auto 0;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+}
+
+.tolaPanelHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.tolaTitle {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  margin: 0;
+  color: var(--gold-bright);
+}
+
+.tolaSub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.tolaTable {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 780px) {
+  .tolaTable { grid-template-columns: repeat(2, 1fr); }
+}
+
+.tolaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+}
+
+.tolaKarat {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.tolaValue {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------ footer ---------------------------- */
+
+.footerStrip {
+  max-width: 960px;
+  margin: 2.2rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.footerDot {
+  opacity: 0.5;
+}
