@@ -6,6 +6,8 @@ import styles from "./LiveGoldRate.module.css";
 const KARATS = ["24k", "22k", "21k", "18k"];
 const REFRESH_MS = 20000;
 const CURRENCIES = ["AED", "USD"];
+const UNITS = ["gram", "oz"];
+const TROY_OUNCE_IN_GRAMS = 31.1034768;
 
 function formatMoney(value, currency) {
   if (value == null || Number.isNaN(value)) return "—";
@@ -15,6 +17,13 @@ function formatMoney(value, currency) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
+}
+
+// gramTable is always priced per gram from the API; convert on display only
+// so the underlying flash/diff logic (which compares gram values) is unaffected.
+function convert(gramValue, unit) {
+  if (gramValue == null) return null;
+  return unit === "oz" ? gramValue * TROY_OUNCE_IN_GRAMS : gramValue;
 }
 
 function formatTime(iso) {
@@ -29,6 +38,7 @@ function formatTime(iso) {
 
 export default function LiveGoldRate() {
   const [currency, setCurrency] = useState("AED");
+  const [unit, setUnit] = useState("gram");
   const [rate, setRate] = useState(null);
   const [error, setError] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -123,14 +133,32 @@ export default function LiveGoldRate() {
               </button>
             ))}
           </div>
+
+          <div className={styles.currencyToggle}>
+            {UNITS.map((u) => (
+              <button
+                key={u}
+                onClick={() => setUnit(u)}
+                className={`${styles.currencyBtn} ${
+                  unit === u ? styles.currencyBtnActive : ""
+                }`}
+              >
+                {u === "gram" ? "Gram" : "Oz"}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
       <div className={styles.hero}>
-        <p className={styles.eyebrow}>24K Gold · Per Gram · {currency}</p>
+        <p className={styles.eyebrow}>
+          24K Gold · Per {unit === "gram" ? "Gram" : "Troy Oz"} · {currency}
+        </p>
 
         <h1 className={styles.heroPrice}>
-          {rate ? formatMoney(rate.gram?.["24k"], currency) : "Loading…"}
+          {rate
+            ? formatMoney(convert(rate.gram?.["24k"], unit), currency)
+            : "Loading…"}
         </h1>
 
         <div className={styles.changeRow}>
@@ -179,23 +207,31 @@ export default function LiveGoldRate() {
 
             <div className={styles.cardPriceRow}>
               <span className={styles.cardGram}>
-                {rate ? formatMoney(rate.gram?.[k], currency) : "—"}
+                {rate
+                  ? formatMoney(convert(rate.gram?.[k], unit), currency)
+                  : "—"}
               </span>
-              <span className={styles.cardUnit}>/ gram</span>
+              <span className={styles.cardUnit}>
+                / {unit === "gram" ? "gram" : "oz"}
+              </span>
             </div>
 
             <div className={styles.cardBuySell}>
               <div className={styles.bsItem}>
                 <span className={styles.bsLabel}>Buy</span>
                 <span className={styles.bsValue}>
-                  {rate ? formatMoney(rate.buyGram?.[k], currency) : "—"}
+                  {rate
+                    ? formatMoney(convert(rate.buyGram?.[k], unit), currency)
+                    : "—"}
                 </span>
               </div>
               <div className={styles.bsDivider} />
               <div className={styles.bsItem}>
                 <span className={styles.bsLabel}>Sell</span>
                 <span className={styles.bsValue}>
-                  {rate ? formatMoney(rate.sellGram?.[k], currency) : "—"}
+                  {rate
+                    ? formatMoney(convert(rate.sellGram?.[k], unit), currency)
+                    : "—"}
                 </span>
               </div>
             </div>
